@@ -4,7 +4,7 @@
 
     <groupId>com.axiomalaska</groupId>
     <artifactId>polyline-encoder</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.1-conveyal</version>
     <packaging>jar</packaging>
 
     <name>polyline-encoder</name>
@@ -21,22 +21,25 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!-- Define where the artifacts produced by this build will be deployed -->
     <distributionManagement>
         <repository>
-            <id>axiom_public_releases</id>
-            <name>Axiom Releases</name>
-            <uniqueVersion>false</uniqueVersion>
-            <url>http://nexus.axiomalaska.com/nexus/content/repositories/public-releases</url>
+            <!-- Also used as snapshotRepository by default -->
+            <id>conveyal-maven-repo</id>
+            <name>Conveyal Maven Repository</name>
+            <url>s3://maven.conveyal.com/</url>
         </repository>
-        <snapshotRepository>
-            <id>axiom_public_snapshots</id>
-            <name>Axiom Snapshots</name>
-            <uniqueVersion>false</uniqueVersion>
-            <url>http://nexus.axiomalaska.com/nexus/content/repositories/public-snapshots</url>
-        </snapshotRepository>
     </distributionManagement>
 
     <build>
+        <!-- "Wagon" necessary for uploading/deploying artifacts to the Conveyal Maven repo on Amazon S3. -->
+        <extensions>
+            <extension>
+                <groupId>org.kuali.maven.wagons</groupId>
+                <artifactId>maven-s3-wagon</artifactId>
+                <version>1.2.1</version>
+            </extension>
+        </extensions>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
